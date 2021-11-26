@@ -59,7 +59,8 @@ file that was distributed with this source code.
                         <h2>{{ '配送情報'|trans }}</h2>
                     </div>
                     {% for Shipping in Order.Shippings %}
-                        <div class="ec-orderDelivery__title">{{ 'お届け先'|trans }}{% if Order.multiple %}({{ loop.index }}){% endif %}</div>
+                        {% set isShowReducedTaxMess = false %}
+                        <div class="ec-orderDelivery__title">{{ 'front.mypage.delivery'|trans }}{% if Order.multiple %}({{ loop.index }}){% endif %}</div>
                         {% for orderItem in Shipping.productOrderItems %}
                             <div class="ec-orderDelivery__item">
                                 <div class="ec-imageGrid">
@@ -77,7 +78,7 @@ file that was distributed with this source code.
                                                 <a href="{{ url('product_detail', {'id': orderItem.Product.id}) }}">{{ orderItem.productName }}</a>
                                             {% else %}
                                                 {{ orderItem.productName }}
-                                            {% endif %} ×{{ orderItem.quantity }} {{ is_reduced_tax_rate(orderItem) ? '※'|trans }}
+                                            {% endif %} ×{{ orderItem.quantity }} {% if is_reduced_tax_rate(orderItem) %}{{ 'common.reduced_tax_rate_symbol'|trans }}{% set isShowReducedTaxMess = true %}{% endif %}
                                         </p>
                                         {% if orderItem.ProductClass is not null %}
                                             {% if orderItem.ProductClass.ClassCategory1 is not null %}
@@ -99,7 +100,7 @@ file that was distributed with this source code.
                                 </div>
                             </div>
                         {% endfor %}
-                        <p>{{ '※ は軽減税率対象商品です。'|trans }}</p>
+                        <p>{{ isShowReducedTaxMess ? 'common.reduced_tax_rate_messeage'|trans }}</p>
                         <div class="ec-orderDelivery__address">
                             <p>{{ Shipping.name01 }}&nbsp;{{ Shipping.name02 }}&nbsp;
                                 ({{ Shipping.kana01 }}&nbsp;{{ Shipping.kana02 }})</p>

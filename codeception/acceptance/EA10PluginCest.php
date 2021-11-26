@@ -515,6 +515,7 @@ abstract class Abstract_Plugin
 
     public function 検証()
     {
+        $this->I->wait(1);
         if ($this->initialized) {
             $this->tableExists();
             $this->columnExists();
@@ -793,6 +794,13 @@ class Horizon_Local extends Local_Plugin
         $this->traits['\Plugin\Horizon\Entity\CartTrait'] = 'src/Eccube/Entity/Cart';
     }
 
+    public function アップデート()
+    {
+        // アップデートで新たしいカラムが追加される
+        $this->columns[] = 'dtb_dash.new_column';
+        return parent::アップデート();
+    }
+
     public static function start(AcceptanceTester $I)
     {
         return new self($I);
@@ -808,6 +816,13 @@ class Horizon_Store extends Store_Plugin
         $this->columns[] = 'dtb_cart.is_horizon';
         $this->columns[] = 'dtb_cart.dash_id';
         $this->traits['\Plugin\Horizon\Entity\CartTrait'] = 'src/Eccube/Entity/Cart';
+    }
+
+    public function アップデート()
+    {
+        // アップデートで新たしいカラムが追加される
+        $this->columns[] = 'dtb_dash.new_column';
+        return parent::アップデート();
     }
 
     public static function start(AcceptanceTester $I)

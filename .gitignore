@@ -1,6 +1,7 @@
 !dummy
 !.gitmodule
 composer.phar
+gulpconfig.js
 /vendor/
 /node_modules/
 /var/*
@@ -17,6 +18,7 @@ composer.phar
 /app/template/*
 !/app/template/admin
 !/app/template/default
+!/app/template/user_data
 /app/proxy/entity/*
 !/app/proxy/entity/.gitkeep
 /html/plugin/*
@@ -39,6 +41,7 @@ composer.phar
 /tests/tmp/*
 /reports/*
 .idea
+.vscode/
 *.php~
 .env
 .maintenance

@@ -55,13 +55,6 @@ class EccubeExtension extends Extension implements PrependExtensionInterface
             $forceSSL = false;
         }
 
-        // framework.yamlでは制御できないため, ここで定義する.
-        $container->prependExtensionConfig('framework', [
-            'session' => [
-                'cookie_secure' => $forceSSL,
-            ],
-        ]);
-
         // SSL強制時は, httpsのみにアクセス制限する
         $accessControl = [
           ['path' => '^/%eccube_admin_route%/login', 'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
@@ -121,7 +114,7 @@ class EccubeExtension extends Extension implements PrependExtensionInterface
 
         $enabled = [];
         foreach ($plugins as $plugin) {
-            if ($plugin['enabled']) {
+            if (array_key_exists('enabled', $plugin) && $plugin['enabled']) {
                 $enabled[] = $plugin['code'];
             }
         }
@@ -196,15 +189,9 @@ class EccubeExtension extends Extension implements PrependExtensionInterface
             return false;
         }
 
-        $sm = $conn->getSchemaManager();
-        $tables = array_filter(
-            $sm->listTables(),
-            function ($table) {
-                return $table->getName() === 'dtb_plugin';
-            }
-        );
+        $tableNames = $conn->getSchemaManager()->listTableNames();
 
-        return empty($tables) ? false : true;
+        return in_array('dtb_plugin', $tableNames);
     }
 
     /**
