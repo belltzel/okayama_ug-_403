@@ -32,6 +32,7 @@
         "doctrine/lexer": "^1.0",
         "doctrine/migrations": "^1.8",
         "doctrine/orm": "^2.6",
+        "ec-cube/MailMagazine4": "^4.1",
         "ec-cube/plugin-installer": "~0.0.6",
         "egulias/email-validator": "^2.1",
         "friendsofphp/php-cs-fixer": "^2.10",
@@ -189,5 +190,16 @@
         },
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "repositories": {
+        "eccube": {
+            "type": "composer",
+            "url": "https://package-api.ec-cube.net",
+            "options": {
+                "http": {
+                    "header": ["X-ECCUBE-KEY: eHKe1JyGD83u1HeOOF6LTz7TcjiK9LdknmWXvuof"]
+                }
+            }
+        }
     }
 }
